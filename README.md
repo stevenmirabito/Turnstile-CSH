@@ -1,5 +1,5 @@
 # Turnstile CSH
-A Computer Science House authentication providor for
+A Computer Science House authentication provider for
 [Turnstile](https://github.com/stormpath/Turnstile)
 
 # Usage
