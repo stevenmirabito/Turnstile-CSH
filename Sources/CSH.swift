@@ -2,7 +2,7 @@ import Turnstile
 import TurnstileWeb
 import Foundation
 
-final class CSH: OAuth2, Realm {
+public class CSH: OAuth2, Realm {
   static let baseURL = URL(string: "https://sso.csh.rit.edu/auth/realms/csh/protocol/openid-connect")!
   
   /// Create a CSH object. Uses the Client ID and Client Secret from the Config
@@ -47,8 +47,8 @@ final class CSH: OAuth2, Realm {
   }
 }
 
-struct CSHAccount {
-  let uuid: String
-  let username: String
-  let commonName: String
+public struct CSHAccount {
+  public let uuid: String
+  public let username: String
+  public let commonName: String
 }
