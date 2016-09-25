@@ -16,8 +16,11 @@ public class CSH: OAuth2, Realm {
   /// Authenticates a CSH access token.
   public func authenticate(credentials: Credentials) throws -> Account {
     switch credentials {
+    case let credentials as CSHAccount:
+        return credentials
     case let credentials as AccessToken:
-      return try authenticate(credentials: credentials)
+      let account: CSHAccount = try authenticate(credentials: credentials)
+      return account
     default:
       throw UnsupportedCredentialsError()
     }
@@ -27,7 +30,7 @@ public class CSH: OAuth2, Realm {
   public func authenticate(credentials: AccessToken) throws -> CSHAccount {
     let url = CSH.baseURL.appendingPathComponent("userinfo")
     var request = URLRequest(url: url)
-    request.setValue("Bearer: \(credentials.string)", forHTTPHeaderField: "Authorization")
+    request.setValue("Bearer \(credentials.string)", forHTTPHeaderField: "Authorization")
     request.setValue("application/json", forHTTPHeaderField: "Accept")
     
     guard let data = (try? urlSession.executeRequest(request: request))?.0 else {
@@ -47,8 +50,12 @@ public class CSH: OAuth2, Realm {
   }
 }
 
-public struct CSHAccount {
+public struct CSHAccount: Account, Credentials {
   public let uuid: String
   public let username: String
   public let commonName: String
+    
+  public var uniqueID: String {
+    return uuid
+  }
 }
