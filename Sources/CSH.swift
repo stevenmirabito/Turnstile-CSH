@@ -48,7 +48,7 @@ public class CSH: OAuth2, Realm {
             throw InvalidAPIResponse()
         }
         
-        guard let uuid = json["sub"] as? String,
+        guard let uuid = json["uuid"] as? String,
             let username = json["preferred_username"] as? String,
             let commonName = json["name"] as? String else {
                 throw IncorrectCredentialsError()
